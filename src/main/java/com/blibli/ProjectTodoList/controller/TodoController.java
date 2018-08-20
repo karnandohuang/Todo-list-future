@@ -45,6 +45,7 @@ public class TodoController {
         return todoRepository.findById(todoId)
                 .map(todo -> {
                     todo.setDescription(todoRequest.getDescription());
+                    todo.setTitle(todoRequest.getTitle());
                     return todoRepository.save(todo);
                 }).orElseThrow(() -> new ResourceNotFoundException("Todo not found with id " + todoId));
     }

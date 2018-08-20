@@ -27,10 +27,11 @@ public class UserController {
     }
 
     @PutMapping("/api/user/{userId}")
-    public User updateUser(@PathVariable Long userId, String name){
+    public User updateUser(@PathVariable Long userId, @Valid @RequestBody User userRequest){
         return userRepository.findById(userId)
                 .map(user -> {
-                    user.setName(name);
+                    user.setName(userRequest.getName());
+                    user.setUsername(userRequest.getUsername());
                     return userRepository.save(user);
                 }).orElseThrow(()-> new ResourceNotFoundException("Username not found with id " + userId));
     }
